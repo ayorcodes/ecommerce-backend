@@ -9,8 +9,8 @@ import {
   OneToOne,
 } from 'typeorm';
 import { AbstractEntity } from '../../shared/entities/abstract-entity';
-import { generateSlug } from '../../utils/functions';
 import { User } from '../../users/entities/user.entity';
+import { Helper } from '../../shared/helpers';
 
 @Entity('roles')
 export class Role extends AbstractEntity {
@@ -34,6 +34,6 @@ export class Role extends AbstractEntity {
 
   @BeforeInsert()
   slugify() {
-    this.slug = generateSlug(this.name);
+    this.slug = Helper.slugify(this.name);
   }
 }

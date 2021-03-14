@@ -15,8 +15,8 @@ async function bootstrap() {
   // app.useGlobalGuards(new PermissionGuard());
 
   const options = new DocumentBuilder()
-    .setTitle('Vedreport Api')
-    .setDescription('The Vedreport API description')
+    .setTitle('Ecommerce Api')
+    .setDescription('The Ecommerce API description')
     .setVersion('1.0')
     .addBearerAuth()
     .build();

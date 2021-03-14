@@ -9,6 +9,7 @@ import { JwtStrategy } from './jwt.strategy';
 
 import * as dotenv from 'dotenv';
 import { JWT_SECRET } from '../constants';
+import { UsersModule } from '../users/users.module';
 
 dotenv.config();
 
@@ -24,6 +25,7 @@ dotenv.config();
     PassportModule.register({
       defaultStrategy: 'jwt',
     }),
+    UsersModule
   ],
   providers: [AuthService, JwtStrategy],
   controllers: [AuthController],

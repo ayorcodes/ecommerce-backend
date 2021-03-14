@@ -7,20 +7,20 @@ export class AbstractService {
   repository: any;
   name: string;
 
-  create(payload: any) {
+  create(payload: any, ...args) {
     const entity = this.repository.create(payload);
     return this.repository.save(entity);
   }
 
-  findAll(pagination: AbstractPaginationDto) {
+  findAll(pagination: AbstractPaginationDto, ...args) {
     return PaginateItems(this.repository, pagination);
   }
 
-  list() {
+  list(...args) {
     return this.repository.find({ select: ['id', 'name'] });
   }
 
-  async findOne(id: string) {
+  async findOne(id: string, ...args) {
     const response = await this.repository.findOne(id);
 
     if (!response) {
@@ -30,13 +30,13 @@ export class AbstractService {
     return response;
   }
 
-  async update(id: string, payload: any) {
+  async update(id: string, payload: any, ...args) {
     await this.findOne(id);
     await this.repository.update(id, payload);
     return this.findOne(id);
   }
 
-  async remove(id: string) {
+  async remove(id: string, ...args) {
     await this.findOne(id);
     await this.repository.delete(id);
     return null;

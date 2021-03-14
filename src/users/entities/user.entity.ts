@@ -1,26 +1,36 @@
 import { AbstractEntity } from 'src/shared/entities/abstract-entity';
-import { BeforeInsert, Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
+import {
+  BeforeInsert,
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  OneToMany,
+} from 'typeorm';
 import { Role } from '../../roles/entities/role.entity';
 import { classToPlain, Exclude } from 'class-transformer';
 import * as bcrypt from 'bcrypt';
+import { Address } from '../../addresses/entities/address.entity';
+import { address } from 'faker';
 
 @Entity('users')
 export class User extends AbstractEntity {
   @Column()
-  firstName: string;
-
-  @Column()
-  lastName: string;
+  fullName: string;
 
   @Column({ unique: true })
   email: string;
 
   @Column({ nullable: true, unique: true })
-  telephone: string;
+  phoneNumber: string;
 
   @Exclude()
   @Column()
   password: string;
+
+  @Exclude()
+  @Column()
+  token: string;
 
   @ManyToOne(() => Role, (role) => role.users, { eager: true })
   @JoinColumn()
@@ -28,6 +38,9 @@ export class User extends AbstractEntity {
 
   @Column({ nullable: true })
   roleId: string;
+
+  @OneToMany(() => Address, (address) => address.user)
+  addresses: Address[];
 
   @Column({ default: true })
   status: boolean;

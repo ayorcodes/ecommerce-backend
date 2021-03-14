@@ -19,7 +19,6 @@ import {
 } from '../shared/response.transformer';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { PermissionResponse } from './permission.response';
-import { AbstractResponse } from '../shared/abstract.response';
 import { AbstractController } from '../shared/controllers/abstract-controller.controller';
 
 @ApiTags('Permissions')

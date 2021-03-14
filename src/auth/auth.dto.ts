@@ -21,10 +21,7 @@ export class LoginDto {
 
 export class RegisterDto {
   @IsNotEmpty()
-  firstName: string;
-
-  @IsNotEmpty()
-  lastName: string;
+  fullName: string;
 
   @IsNotEmpty()
   @IsEmail()
@@ -32,7 +29,7 @@ export class RegisterDto {
 
   @IsNotEmpty()
   @IsOptional()
-  telephone: string;
+  phoneNumber: string;
 
   @IsNotEmpty()
   password: string;

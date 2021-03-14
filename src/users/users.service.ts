@@ -80,6 +80,16 @@ export class UsersService {
     return response;
   }
 
+  async findByEmail(email: string) {
+    const response = await this.userRepo.findOne({ where: { email } });
+
+    if (!response) {
+      throw new NotFoundException('User Not Found');
+    }
+
+    return response;
+  }
+
   update(id: number, updateUserDto: UpdateUserDto) {
     return `This action updates a #${id} user`;
   }

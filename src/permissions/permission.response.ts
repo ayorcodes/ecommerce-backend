@@ -1,21 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { AbstractResponse } from '../shared/abstract.response';
+import { BasicResponse } from '../shared/response/basic-response';
 
-export class PermissionResponse extends AbstractResponse {
-  // @ApiProperty()
-  // id: string;
-
-  @ApiProperty()
-  name: string;
-
-  @ApiProperty()
-  description: string;
-
-  // @ApiProperty()
-  // createdAt: Date;
-
-  // @ApiProperty()
-  // updatedAt: Date;
-}
+export class PermissionResponse extends BasicResponse {}
 
 export class PermissionListResponse {}
