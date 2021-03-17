@@ -1,5 +1,18 @@
-import { Column, Entity, OneToMany } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  JoinTable,
+  ManyToMany,
+  ManyToOne,
+  OneToMany,
+} from 'typeorm';
+import { Brand } from '../../brands/entities/brand.entity';
+import { Category } from '../../categories/entities/category.entity';
+import { Color } from '../../colors/entities/color.entity';
 import { BasicEntity } from '../../shared/entities/basic-entity';
+import { Size } from '../../sizes/entities/size.entity';
+import { SubCategory } from '../../sub-categories/entities/sub-category.entity';
 import { Tag } from '../../tags/entities/tag.entity';
 import { Upload } from '../../uploads/entities/upload.entity';
 
@@ -15,7 +28,19 @@ export class Product extends BasicEntity {
   discount: number;
 
   @Column()
-  availability: string;
+  availability: boolean;
+
+  @ManyToMany(() => Category, (categories) => categories.products, {
+    eager: true,
+  })
+  @JoinTable()
+  categories: Category[];
+
+  @ManyToMany(() => SubCategory, (subCategories) => subCategories.products, {
+    eager: true,
+  })
+  @JoinTable()
+  subCategories: SubCategory[];
 
   // @Column()
   // categoryId: string;
@@ -29,13 +54,28 @@ export class Product extends BasicEntity {
   @Column()
   sku: string;
 
-  @OneToMany(() => Tag, tags=>tags.product)
+  @ManyToMany(() => Tag, (tags) => tags.product, { eager: true })
+  @JoinTable()
   tags: Tag[];
 
-  @OneToMany(() => Upload, images=>images.product)
+  @ManyToMany(() => Size, (sizes) => sizes.product, { eager: true })
+  @JoinTable()
+  sizes: Size[];
+
+  @ManyToMany(() => Color, (colors) => colors.product, { eager: true })
+  @JoinTable()
+  colors: Color[];
+
+  @ManyToOne(() => Brand, { eager: true })
+  @JoinColumn()
+  brand: Brand;
+
+  @Column()
+  brandId: string;
+
+  @OneToMany(() => Upload, (images) => images.product)
   images: Upload[];
 
-  @Column({default: false})
+  @Column({ default: false })
   featured: boolean;
-
 }
