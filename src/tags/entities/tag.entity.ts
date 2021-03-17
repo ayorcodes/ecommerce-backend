@@ -4,6 +4,6 @@ import { BasicEntity } from '../../shared/entities/basic-entity';
 
 @Entity('tags')
 export class Tag extends BasicEntity {
-  @ManyToOne(() => Product, (product) => product.tags)
+  @ManyToMany(() => Product, (product) => product.tags)
   product: Product;
 }
