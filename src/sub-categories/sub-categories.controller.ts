@@ -1,34 +1,37 @@
-import { Controller, Get, Post, Body, Put, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Put,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { SubCategoriesService } from './sub-categories.service';
 import { CreateSubCategoryDto } from './dto/create-sub-category.dto';
 import { UpdateSubCategoryDto } from './dto/update-sub-category.dto';
+import { AbstractController } from '../shared/controllers/abstract-controller.controller';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Sub Categories')
 @Controller('sub-categories')
-export class SubCategoriesController {
-  constructor(private readonly subCategoriesService: SubCategoriesService) {}
+export class SubCategoriesController extends AbstractController {
+  constructor(private readonly subCategoriesService: SubCategoriesService) {
+    super();
+    this.service = this.subCategoriesService;
+    this.name = 'Sub category';
+  }
 
   @Post()
   create(@Body() createSubCategoryDto: CreateSubCategoryDto) {
-    return this.subCategoriesService.create(createSubCategoryDto);
-  }
-
-  @Get()
-  findAll() {
-    return this.subCategoriesService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.subCategoriesService.findOne(+id);
+    return super.create(createSubCategoryDto);
   }
 
   @Put(':id')
-  update(@Param('id') id: string, @Body() updateSubCategoryDto: UpdateSubCategoryDto) {
-    return this.subCategoriesService.update(+id, updateSubCategoryDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.subCategoriesService.remove(+id);
+  update(
+    @Param('id') id: string,
+    @Body() updateSubCategoryDto: UpdateSubCategoryDto,
+  ) {
+    return super.update(id, updateSubCategoryDto);
   }
 }

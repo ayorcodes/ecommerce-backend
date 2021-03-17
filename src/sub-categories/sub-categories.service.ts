@@ -1,26 +1,19 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { AbstractService } from '../shared/services/abstract-service.service';
 import { CreateSubCategoryDto } from './dto/create-sub-category.dto';
 import { UpdateSubCategoryDto } from './dto/update-sub-category.dto';
+import { SubCategory } from './entities/sub-category.entity';
 
 @Injectable()
-export class SubCategoriesService {
-  create(createSubCategoryDto: CreateSubCategoryDto) {
-    return 'This action adds a new subCategory';
-  }
-
-  findAll() {
-    return `This action returns all subCategories`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} subCategory`;
-  }
-
-  update(id: number, updateSubCategoryDto: UpdateSubCategoryDto) {
-    return `This action updates a #${id} subCategory`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} subCategory`;
+export class SubCategoriesService extends AbstractService {
+  constructor(
+    @InjectRepository(SubCategory)
+    private readonly subCategory: Repository<SubCategory>,
+  ) {
+    super();
+    this.repository = this.subCategory;
+    this.name = 'Sub category';
   }
 }
