@@ -1,26 +1,18 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { AbstractService } from '../shared/services/abstract-service.service';
 import { CreateSizeDto } from './dto/create-size.dto';
 import { UpdateSizeDto } from './dto/update-size.dto';
+import { Size } from './entities/size.entity';
 
 @Injectable()
-export class SizesService {
-  create(createSizeDto: CreateSizeDto) {
-    return 'This action adds a new size';
-  }
-
-  findAll() {
-    return `This action returns all sizes`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} size`;
-  }
-
-  update(id: number, updateSizeDto: UpdateSizeDto) {
-    return `This action updates a #${id} size`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} size`;
+export class SizesService extends AbstractService {
+  constructor(
+    @InjectRepository(Size) private readonly sizeRepo: Repository<Size>,
+  ) {
+    super();
+    this.repository = this.sizeRepo;
+    this.name = 'Size';
   }
 }
