@@ -1,34 +1,34 @@
-import { Controller, Get, Post, Body, Put, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Put,
+  Param,
+  Delete,
+} from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
+import { AbstractController } from '../shared/controllers/abstract-controller.controller';
 import { ColorsService } from './colors.service';
 import { CreateColorDto } from './dto/create-color.dto';
 import { UpdateColorDto } from './dto/update-color.dto';
 
+@ApiTags('Colors')
 @Controller('colors')
-export class ColorsController {
-  constructor(private readonly colorsService: ColorsService) {}
+export class ColorsController extends AbstractController {
+  constructor(private readonly colorsService: ColorsService) {
+    super();
+    this.service = this.colorsService;
+    this.name = 'Color';
+  }
 
   @Post()
   create(@Body() createColorDto: CreateColorDto) {
-    return this.colorsService.create(createColorDto);
-  }
-
-  @Get()
-  findAll() {
-    return this.colorsService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.colorsService.findOne(+id);
+    return super.create(createColorDto);
   }
 
   @Put(':id')
   update(@Param('id') id: string, @Body() updateColorDto: UpdateColorDto) {
-    return this.colorsService.update(+id, updateColorDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.colorsService.remove(+id);
+    return super.update(id, updateColorDto);
   }
 }
