@@ -26,8 +26,8 @@ export class AddressesController {
   constructor(private readonly addressesService: AddressesService) {}
 
   @Post()
-  async create(@Body() createAddressDto: CreateAddressDto) {
-    const response = await this.addressesService.create(createAddressDto);
+  async create(@Body() createAddressDto: CreateAddressDto, @CurrentUser() user: User) {
+    const response = await this.addressesService.create(createAddressDto, user);
     return sendObjectResponse(response, 'Address Created');
   }
 

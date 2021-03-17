@@ -20,7 +20,8 @@ export class AddressesService extends AbstractService {
     this.name = 'Address';
   }
 
-  create(createAddressDto: CreateAddressDto) {
+  create(createAddressDto: CreateAddressDto, user: User) {
+    createAddressDto.user = user;
     const address = this.addressRepository.create(createAddressDto);
     return this.addressRepository.save(address);
   }
