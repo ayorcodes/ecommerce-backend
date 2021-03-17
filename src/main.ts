@@ -5,6 +5,7 @@ import { DocumentBuilder } from '@nestjs/swagger/dist/document-builder';
 import { SwaggerModule } from '@nestjs/swagger/dist/swagger-module';
 import { ValidationPipe } from '@nestjs/common';
 import { PermissionGuard } from './shared/guards/permissions.guard';
+const fs = require('fs');
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -21,7 +22,8 @@ async function bootstrap() {
     .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, options);
-  SwaggerModule.setup('swagger', app, document, {
+  fs.writeFileSync('./swagger-spec.json', JSON.stringify(document));
+  SwaggerModule.setup('/swagger', app, document, {
     swaggerOptions: {
       tagsSorter: 'alpha',
       operationsSorter: 'alpha',
