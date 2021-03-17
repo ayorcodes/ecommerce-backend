@@ -6,6 +6,9 @@ export class PromoCode extends AbstractEntity {
   @Column()
   code: string;
 
+  @Column({ default: 5 })
+  slots: number;
+
   @Column({ default: false })
   status: boolean;
 }
